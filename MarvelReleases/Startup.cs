@@ -28,14 +28,26 @@ namespace MarvelReleases
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options => 
                     options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            // Seed
+            services.AddScoped<SeedingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
         {
+            // Automate Migrations
+            using (IServiceScope scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+			{
+				AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+				dbContext.Database.Migrate();
+			}
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Init(); // seed the DB
             }
             else
             {
