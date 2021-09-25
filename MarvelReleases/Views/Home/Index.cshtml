@@ -1,8 +1,23 @@
-﻿@{
+﻿@model IEnumerable<Movie>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    @foreach (var movie in Model)
+    {
+        <div class="item">
+            <h1>@movie.MovieName (@movie.Genre)</h1>
+            @if(movie.ReleaseDate != null)
+            {   
+                <p>Lançamento: @movie.ReleaseDate.Value.ToString("M") de @movie.ReleaseDate.Value.Year</p>
+            }
+            else
+            {
+                <p>Lançamento: Sem data definida</p>
+            }
+            <img src="@movie.Img" alt="@movie.Img" width="400" height="250">
+        </div>
+    }
 </div>

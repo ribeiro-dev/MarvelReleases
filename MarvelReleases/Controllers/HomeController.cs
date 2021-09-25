@@ -6,21 +6,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MarvelReleases.Models;
+using MarvelReleases.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarvelReleases.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Movies
+                            .OrderByDescending(m => m.ReleaseDate.HasValue) // not null first
+                            .ThenBy(m => m.ReleaseDate) // then by date
+                            .ToListAsync());
         }
 
         public IActionResult Privacy()
