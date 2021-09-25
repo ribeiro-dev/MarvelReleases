@@ -54,7 +54,7 @@ namespace MarvelReleases.Data
             Movie m4 = new Movie {
                 Id = 4,
                 MovieName = "Thor: Love and Thunder",
-                ReleaseDate = new DateTime(2021, 5, 6),
+                ReleaseDate = new DateTime(2022, 5, 6),
                 Img = "./Img/Thor.png",
                 Genre = "Filme"
             };
