@@ -32,7 +32,7 @@ namespace MarvelReleases.Data
                 MovieName = "Eternos",
                 ReleaseDate = new DateTime(2021, 11, 5),
                 Img = "./Img/Eternos.png",
-                Genre = "Série"
+                Genre = "Filme"
             };
 
             Movie m2 = new Movie {
