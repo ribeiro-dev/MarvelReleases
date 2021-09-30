@@ -1,23 +1,33 @@
 ﻿@model IEnumerable<Movie>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Página Inicial";
 }
+<div class="container-sm">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="album">
+                @foreach (var movie in Model)
+                {
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <h1 class="card-title">@movie.MovieName</h1>
 
-<div>
-    @foreach (var movie in Model)
-    {
-        <div class="item">
-            <h1>@movie.MovieName (@movie.Genre)</h1>
-            @if(movie.ReleaseDate != null)
-            {   
-                <p>Lançamento: @movie.ReleaseDate.Value.ToString("M") de @movie.ReleaseDate.Value.Year</p>
-            }
-            else
-            {
-                <p>Lançamento: Sem data definida</p>
-            }
-            <img src="@movie.Img" alt="@movie.Img" width="400" height="250">
+                            @*Se houver data definida*@
+                            @if(movie.ReleaseDate != null)
+                            {   
+                                <p class="card-text"><strong>Lançamento:</strong> @movie.ReleaseDate.Value.ToString("M") de @movie.ReleaseDate.Value.Year</p>
+                            }
+                            else
+                            {
+                                <p class="card-text"><strong>Lançamento:</strong> Sem data definida</p>
+                            }
+                            <p><strong>O que é:</strong> @movie.Genre</p>
+                        </div>
+                        <img class="card-img-bottom img-fluid" src="@movie.Img" alt="@movie.MovieName" height="300">
+                    </div>
+                }
+            </div>
         </div>
-    }
+    </div>
 </div>
